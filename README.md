@@ -9,6 +9,8 @@ An application that you can add your own notes and attachments to bank transacti
 
 ## Azure
 To get the Aspire Dashboard showing in Azure
-[azure-cae.png](Open the dashboard link in the Azure portal)
-[azure-iam.png](You must first give your user Contributor permission to the Container App Environment) Other get error: "Could not authenticate user with requested resource."
-(These are the correct instructions but it is still not working)
+- Open the build deployment output and find the dashboard link
+![](https://github.com/pngan/transactionnotes/blob/main/github-output.png)
+
+- You must first give your user Contributor permission to the Container App Environment. Otherwise you will get the error: "Could not authenticate user with requested resource."
+![](https://github.com/pngan/transactionnotes/blob/main/azure-iam.png)
