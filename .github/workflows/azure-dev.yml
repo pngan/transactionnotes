@@ -31,8 +31,8 @@ jobs:
         
       - name: Setup Dotnet
         uses: actions/setup-dotnet@v4.1.0
-            with:
-            dotnet-version: 9.x
+        with:
+          dotnet-version: 9.x
 
       - name: Install azd
         uses: Azure/setup-azd@v1.0.0
