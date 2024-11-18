@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Configuration;
 using transactionnotes.Web;
 using transactionnotes.Web.Components;
+using Keycloak.AuthServices.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
         // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
         client.BaseAddress = new("https+http://apiservice");
     });
+
 
 var app = builder.Build();
 
