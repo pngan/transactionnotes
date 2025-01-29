@@ -15,9 +15,27 @@ An application that you can add your own notes and attachments to bank transacti
 To get the Aspire Dashboard showing in Azure
 - Open the build deployment output and find the dashboard link
 
+Or
+    - Open Azure Portal
+    - Click `rg-transactionnotes`
+    - `Container Apps Environment`
+    - `Open Dashboard`
+
+
 ![](https://github.com/pngan/transactionnotes/blob/main/github-output.png)
 
-- You must first give your user Contributor permission to the `Container Apps ManagedEnvironments`. Otherwise you will get the error: "Could not authenticate user with requested resource."
+- You must first give your user Contributor permission to the `Container Apps Managed Environments`. Otherwise you will get the error: "Could not authenticate user with requested resource."
+    - Open Azure Portal
+    - Click `rg-transactionnotes`
+    - Access Control (IAM)
+    - `Add Role Assignment`
+    - `Privileged administrator roles`
+    - `Contributor` > `Next`
+    - `Members` > `User, group, or service principal` 
+    - `Select Members` > <your login email> > `Select`
+    - `Review + assign`
+    - `Review + assign`
+
 
 ![](https://github.com/pngan/transactionnotes/blob/main/azure-iam.png)
 
