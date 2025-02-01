@@ -28,7 +28,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// The following line that enables HTTPS redirection is commented out because the API service 
+// should use plain HTTP when used behind a reverse proxy. We are deploying this application
+// to a Docker compose environment where the reverse proxy will handle incoming external HTTPS
+// connections, but uses plain HTTP to communicate internally with the API service.
+//app.UseHttpsRedirection();
 
 app.UseAntiforgery();
 

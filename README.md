@@ -2,7 +2,22 @@
 
 An application that you can add your own notes and attachments to bank transactions.
 
+## Docker Compose
+
+### Build and deploy to Docker Compose
+
+This app is built using  .Net Aspire. By default these app are deployed publically to Azure Container Services. However using a tool called `aspirate` they can be deployed to container targets such as
+Docker Compose. To deploy to docker compose, you first need `Docker` installed on the developer machine, and have it running.
+
+Then run the command script [publish-to-dockerhub.cmd](publish-to-dockerhub.cmd) . The contents of this script needs to be changed to your particular dockerhub account. The aspirate secrets are 
+stored in my password manager.
+
+This command will create a set of docker containers that should be pushed to a docker image repository - such as dockerhub - and a `docker-compose.yaml` file. This file needs a few adjustments 
+and has been saved as [docker-compose.yaml](docker-compose.yaml).
+
 ## Azure
+
+The most convenient way to deploy .Net Aspire apps to the public is to host them on Azure Container Services. In this repository, GitHub actions has been setup to deploy to Azure.
 
 ### Build and deploy to Azure
 
@@ -46,11 +61,11 @@ Or
  - `cd transactionnotes\transactionnotes.AppHost`
  - azd down
 
-## Prerequisites
+### Prerequisites
 
 - `azd` Azure Deploy command line tool -  `choco install azd`
  
-## Reference
+### Reference
 
 - [Create Aspire Blazor App using Visual Studio](https://youtu.be/BBGeousUHQU?si=UtCmni5sZBfo92qV)
 - [Deploy App to Azure Container Services using GitHub Actions](https://learn.microsoft.com/en-us/dotnet/aspire/deployment/azure/aca-deployment-github-actions?tabs=windows&pivots=github-actions)
@@ -72,8 +87,3 @@ Refresh the credentials, by own your Windows machine
  - `azd pipeline config`
 
  Once the secrets have been refreshed, try running the github action again.
-
-
-
-
-

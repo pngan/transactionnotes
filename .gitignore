@@ -482,3 +482,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# aspirate files
+aspirate-output/
+aspirate-state.json
+manifest.json
