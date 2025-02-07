@@ -5,7 +5,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 var username = builder.AddParameter("keycloak-username");
 var password = builder.AddParameter("keycloak-password", secret: true);
 var keycloak = builder.AddKeycloak("keycloak",
-        builder.Environment.EnvironmentName == Environments.Development ? 8088 : 80,
+                        80,
                         username,
                         password)
                       .WithDataVolume();
