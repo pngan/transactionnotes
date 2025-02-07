@@ -30,12 +30,12 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Setup Dotnet
-        uses: actions/setup-dotnet@v4.1.0
+        uses: actions/setup-dotnet@v4.3.0
         with:
           dotnet-version: 9.x
 
       - name: Install azd
-        uses: Azure/setup-azd@v1.0.0
+        uses: Azure/setup-azd_v2.1.0
 
       - name: Install .NET Aspire workload
         run: dotnet workload install aspire
