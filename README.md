@@ -32,7 +32,7 @@ To get the Aspire Dashboard showing in Azure
 - Open the build deployment output and find the dashboard link
 
 Or
-    - Open Azure Portal
+    - [Open Azure Portal](https://portal.azure.com)
     - Click `rg-transactionnotes`
     - `Container Apps Environment`
     - `Open Dashboard`
@@ -41,7 +41,7 @@ Or
 ![](https://github.com/pngan/transactionnotes/blob/main/github-output.png)
 
 - You must first give your user Contributor permission to the `Container Apps Managed Environments`. Otherwise you will get the error: "Could not authenticate user with requested resource."
-    - Open Azure Portal
+    - [Open Azure Portal](https://portal.azure.com)
     - Click `rg-transactionnotes`
     - Access Control (IAM)
     - `Add Role Assignment`
@@ -82,8 +82,29 @@ ERROR: failed deploying service 'apiservice': logging in to registry: failed log
 
 It is because some secret has expired in github secrets.
 Refresh the credentials, by own your Windows machine
-
- - `cd transactionnotes\transactionnotes.AppHost`
- - `azd pipeline config`
+```
+cd transactionnotes\transactionnotes.AppHost
+azd pipeline config
+```
 
  Once the secrets have been refreshed, try running the github action again.
+
+----
+
+
+If the github actions workflow fails with this error:
+```
+panic: don't know how to prompt for type *survey.Password
+```
+This is error arises when a new Aspire parameter has been added, e.g.
+```
+var password = builder.AddParameter("keycloak-password", secret: true);
+```
+`azd` prompts for that missing paramter when it is running in github actions, but cannot interactively prompt.
+
+The solution is to re-run on your local developer machine:
+```
+cd transactionnotes\transactionnotes.AppHost
+azd pipeline config
+```
+This will prompt you for the missing secret values and store them with the Actions in the source repo.
