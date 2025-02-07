@@ -2,21 +2,17 @@ using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var username = builder.AddParameter("keycloak-username");
-var password = builder.AddParameter("keycloak-password", secret: true);
-var keycloak = builder.AddKeycloak("keycloak",
-                        80,
-                        username,
-                        password)
-                      .WithDataVolume();
+var authority = builder.Configuration["TransNotes:Authority"];
+var clientId = builder.Configuration["TransNotes:ClientId"];
+var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
 
-var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice")
-                        .WithReference(keycloak)
-                        .WaitFor(keycloak);
+var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice");
 
 builder.AddProject<Projects.transactionnotes_Web>("webfrontend")
     .WithExternalHttpEndpoints()
-    .WithReference(keycloak)
+    .WithEnvironment("TransNotes__Authority", authority)
+    .WithEnvironment("TransNotes__ClientId", clientId)
+    .WithEnvironment("TransNotes__ClientSecret", clientSecret)
     .WithReference(apiService)
     .WaitFor(apiService);
 

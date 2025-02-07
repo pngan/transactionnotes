@@ -2,6 +2,24 @@
 
 An application that you can add your own notes and attachments to bank transactions.
 
+## Pre-requisite: Keycloak
+
+This app uses a running Keycloak instance that has been set up with:
+- a Realm called `transactionnotes` that is configured with OpenId Connect standard flow (Authorization Code Flow)
+- This Realm will have a client registered, with a client Id called `transactionnotes` and a client secret
+
+- Information about this Realm should be specified in the `appsettings.Development.json` of the `transactionnotes.AppHost` project, using a section like.
+```
+  "TransNotes": {
+    "Authority": "https://auth.nganfamily.com/realms/transactionnotes/",
+    "ClientSecret": "<Redacted>",
+    "ClientId": "transactionnotes"
+  }
+```
+
+The redacted secret can be obtained by logging into Keycloak using `admin` and looking at the registered `Clients`.
+
+
 ## Docker Compose
 
 ### Build and deploy to Docker Compose

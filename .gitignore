@@ -487,3 +487,4 @@ $RECYCLE.BIN/
 aspirate-output/
 aspirate-state.json
 manifest.json
+transactionnotes.AppHost/appsettings.Development.json

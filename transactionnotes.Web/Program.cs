@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using transactionnotes.Web;
 using transactionnotes.Web.Components;
 
@@ -18,6 +20,33 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
         // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
         client.BaseAddress = new("https+http://apiservice");
     });
+
+var authority = builder.Configuration["TransNotes:Authority"];
+var clientId = builder.Configuration["TransNotes:ClientId"];
+var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
+
+// Add authentication services
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+})
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme) // Use cookies for local authentication
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
+    options.Authority = authority; // Replace with your Keycloak realm URL
+    options.ClientId = clientId; // Replace with your Keycloak client ID
+    options.ClientSecret = clientSecret; // Replace with your Keycloak client secret
+    options.ResponseType = "code"; // Use Authorization Code Flow
+    options.SaveTokens = true; // Save tokens in the authentication cookie
+    options.GetClaimsFromUserInfoEndpoint = true; // Fetch additional claims from the user info endpoint
+    options.Scope.Add("openid"); // Add required scopes
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+    options.CallbackPath = "/signin-oidc"; // Callback path for the OIDC provider
+    options.SignedOutCallbackPath = "/signout-callback-oidc"; // Callback path for sign-out
+});
+
 
 var app = builder.Build();
 
@@ -44,5 +73,9 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();
+
+// Add authentication and authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
