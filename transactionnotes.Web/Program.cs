@@ -21,6 +21,10 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
         client.BaseAddress = new("https+http://apiservice");
     });
 
+// Specify in appsettings.Development.json for local development, or use environment variables in production
+// E.g. TRANSNOTES__AUTHORITY, TRANSNOTES__CLIENTID, TRANSNOTES__CLIENTSECRET
+
+// Specify the Keycloak realm URL, client ID, and client secret
 var authority = builder.Configuration["TransNotes:Authority"];
 var clientId = builder.Configuration["TransNotes:ClientId"];
 var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
@@ -31,12 +35,19 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme) // Use cookies for local authentication
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(8);
+    options.SlidingExpiration = true;
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Lax; // auth service cannot use strict
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+}) // Use cookies for local authentication
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
-    options.Authority = authority; // Replace with your Keycloak realm URL
-    options.ClientId = clientId; // Replace with your Keycloak client ID
-    options.ClientSecret = clientSecret; // Replace with your Keycloak client secret
+    options.Authority = authority;
+    options.ClientId = clientId;
+    options.ClientSecret = clientSecret;
     options.ResponseType = "code"; // Use Authorization Code Flow
     options.SaveTokens = true; // Save tokens in the authentication cookie
     options.GetClaimsFromUserInfoEndpoint = true; // Fetch additional claims from the user info endpoint
@@ -46,7 +57,6 @@ builder.Services.AddAuthentication(options =>
     options.CallbackPath = "/signin-oidc"; // Callback path for the OIDC provider
     options.SignedOutCallbackPath = "/signout-callback-oidc"; // Callback path for sign-out
 });
-
 
 var app = builder.Build();
 
