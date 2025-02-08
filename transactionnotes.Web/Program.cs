@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using transactionnotes.Web;
 using transactionnotes.Web.Components;
+using transactionnotes.Web.Middleware;
+using transactionnotes.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +17,20 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddOutputCache();
 
+builder.Services.AddTransient<AuthenticatedHttpClientHandler>();
+builder.Services.AddTransient<DebuggingHttpHandler>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
     {
         // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
         // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
         client.BaseAddress = new("https+http://apiservice");
-    });
+    })
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
+    .AddHttpMessageHandler<DebuggingHttpHandler>();
 
+
+builder.Services.AddHttpContextAccessor();
 // Specify in appsettings.Development.json for local development, or use environment variables in production
 // E.g. TRANSNOTES__AUTHORITY, TRANSNOTES__CLIENTID, TRANSNOTES__CLIENTSECRET
 
@@ -48,7 +58,7 @@ builder.Services.AddAuthentication(options =>
     options.Authority = authority;
     options.ClientId = clientId;
     options.ClientSecret = clientSecret;
-    options.ResponseType = "code"; // Use Authorization Code Flow
+    options.ResponseType = OpenIdConnectResponseType.Code; // Use Authorization Code Flow
     options.SaveTokens = true; // Save tokens in the authentication cookie
     options.GetClaimsFromUserInfoEndpoint = true; // Fetch additional claims from the user info endpoint
     options.Scope.Add("openid"); // Add required scopes
