@@ -1,6 +1,9 @@
 ﻿@page "/weather"
 
 @using Microsoft.AspNetCore.Authorization
+@using transactionnotes.Web.Services
+
+@inject ErrorHandlingService ErrorHandler
 @attribute [Authorize]
 
 @attribute [StreamRendering(true)]

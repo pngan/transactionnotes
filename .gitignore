@@ -488,3 +488,4 @@ aspirate-output/
 aspirate-state.json
 manifest.json
 transactionnotes.Web/appsettings.Development.json
+transactionnotes.ApiService/appsettings.Development.json

@@ -4,7 +4,7 @@ using transactionnotes.ApiService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-/*
+
 // Add authentication
 // Specify in appsettings.Development.json for local development, or use environment variables in production
 // E.g. TRANSNOTES__AUTHORITY, TRANSNOTES__CLIENTID, TRANSNOTES__CLIENTSECRET
@@ -13,17 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 var authority = builder.Configuration["TransNotes:Authority"];
 var clientId = builder.Configuration["TransNotes:ClientId"];
 var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
+var audience = builder.Configuration["TransNotes:Audience"];
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = authority;
-        options.Audience = clientId; // Ensure this matches the client ID for your API
+        //options.Audience = audience;
         options.RequireHttpsMetadata = false; // Set to true in production
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = true,
-            ValidAudience = clientId,
+            ValidAudience = audience,
             ValidateIssuer = true,
             ValidIssuer = authority,
             ValidateLifetime = true,
@@ -32,7 +33,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-*/
+
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
@@ -45,11 +46,12 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-/*
+
 // Use authentication & authorization
 app.UseAuthentication();
+app.UseAuthHeaderInspection();
 app.UseAuthorization();
-*/
+
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
@@ -73,10 +75,10 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast")
+.RequireAuthorization();
 
 app.MapDefaultEndpoints();
-app.UseAuthHeaderInspection();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

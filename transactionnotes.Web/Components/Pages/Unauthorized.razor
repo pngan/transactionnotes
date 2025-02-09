@@ -1,0 +1,35 @@
+﻿@page "/unauthorized"
+@inject NavigationManager Navigation
+
+<div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Access Denied</h4>
+        <p>You are not authorized to access this resource. This could be because:</p>
+        <ul>
+            <li>Your session has expired</li>
+            <li>You don't have the required permissions</li>
+            <li>You need to log in again</li>
+        </ul>
+        <hr>
+        <p class="mb-0">
+            <button class="btn btn-primary" @onclick="Login">Log In Again</button>
+            <button class="btn btn-secondary" @onclick="GoHome">Go to Home</button>
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    private void Login()
+    {
+        Navigation.NavigateTo($"authentication/login?returnUrl={ReturnUrl}", true);
+    }
+
+    private void GoHome()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

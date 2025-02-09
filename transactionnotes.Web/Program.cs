@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using transactionnotes.Web;
 using transactionnotes.Web.Components;
 using transactionnotes.Web.Middleware;
@@ -38,6 +40,7 @@ builder.Services.AddHttpContextAccessor();
 var authority = builder.Configuration["TransNotes:Authority"];
 var clientId = builder.Configuration["TransNotes:ClientId"];
 var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
+var audience = builder.Configuration["TransNotes:Audience"];
 
 // Add authentication services
 builder.Services.AddAuthentication(options =>
@@ -58,15 +61,17 @@ builder.Services.AddAuthentication(options =>
     options.Authority = authority;
     options.ClientId = clientId;
     options.ClientSecret = clientSecret;
+    options.TokenValidationParameters.ValidAudience = audience;
     options.ResponseType = OpenIdConnectResponseType.Code; // Use Authorization Code Flow
     options.SaveTokens = true; // Save tokens in the authentication cookie
-    options.GetClaimsFromUserInfoEndpoint = true; // Fetch additional claims from the user info endpoint
+    //options.GetClaimsFromUserInfoEndpoint = true; // Fetch additional claims from the user info endpoint
     options.Scope.Add("openid"); // Add required scopes
     options.Scope.Add("profile");
     options.Scope.Add("email");
     options.CallbackPath = "/signin-oidc"; // Callback path for the OIDC provider
     options.SignedOutCallbackPath = "/signout-callback-oidc"; // Callback path for sign-out
 });
+builder.Services.AddScoped<ErrorHandlingService>();
 
 var app = builder.Build();
 
