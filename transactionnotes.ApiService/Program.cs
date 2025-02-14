@@ -19,7 +19,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = authority;
-        //options.Audience = audience;
         options.RequireHttpsMetadata = false; // Set to true in production
         options.TokenValidationParameters = new TokenValidationParameters
         {
