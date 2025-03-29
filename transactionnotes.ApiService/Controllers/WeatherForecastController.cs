@@ -5,7 +5,7 @@ namespace transactionnotes.ApiService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize] // This applies authorization to all endpoints in the controller
+[Authorize(Roles = "transactionnotes-read")] // This applies authorization to all endpoints in the controller
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -32,4 +32,4 @@ public class WeatherForecast
     public int TemperatureC { get; set; }
     public string? Summary { get; set; }
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-} 
+}

@@ -1,4 +1,6 @@
 ﻿@page "/unauthorized"
+
+@rendermode InteractiveServer
 @inject NavigationManager Navigation
 
 <div class="container mt-5">
@@ -25,7 +27,8 @@
 
     private void Login()
     {
-        Navigation.NavigateTo($"authentication/login?returnUrl={ReturnUrl}", true);
+        string returnUrlParam = string.IsNullOrEmpty(ReturnUrl) ? "/" : ReturnUrl;
+        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(returnUrlParam)}", true);
     }
 
     private void GoHome()

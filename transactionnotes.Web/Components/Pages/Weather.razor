@@ -10,6 +10,7 @@
 @attribute [OutputCache(Duration = 5)]
 
 @inject WeatherApiClient WeatherApi
+@inject ErrorHandlingService ErrorHandlingService
 
 <PageTitle>Weather</PageTitle>
 
@@ -19,7 +20,14 @@
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    if (errorMessage != null)
+    {
+        <p><em>@errorMessage</em></p>
+    }
+    else
+    {
+        <p><em>Loading...</em></p>
+    }
 }
 else
 {
@@ -48,9 +56,29 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            forecasts = await WeatherApi.GetWeatherAsync();
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized || ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        {
+            errorMessage = "You are not permitted to view this data. Redirecting to login...";
+            //await Task.Delay(3000); // Wait for 3 seconds before redirecting
+            ErrorHandlingService.HandleError(ex, "Weather");
+            //NavigationManager.NavigateTo("login");
+        }
+    }
+}
+
+@* @code {
+    private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
         forecasts = await WeatherApi.GetWeatherAsync();
     }
-}
+} *@

@@ -18,10 +18,11 @@ namespace transactionnotes.Web.Services
         {
             if (ex is HttpRequestException httpEx)
             {
-                if (httpEx.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                if (httpEx.StatusCode == System.Net.HttpStatusCode.Unauthorized || httpEx.StatusCode == System.Net.HttpStatusCode.Forbidden)
                 {
                     _logger.LogWarning("Unauthorized access attempt in {Component}", component);
                     _navigationManager.NavigateTo($"/unauthorized?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}");
+                    //_navigationManager.NavigateTo($"/");
                 }
             }
         }
