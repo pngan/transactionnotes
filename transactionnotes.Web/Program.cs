@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using transactionnotes.Web;
 using transactionnotes.Web.Components;
 using transactionnotes.Web.Middleware;
@@ -70,7 +72,28 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("email");
     options.CallbackPath = "/signin-oidc"; // Callback path for the OIDC provider
     options.SignedOutCallbackPath = "/signout-callback-oidc"; // Callback path for sign-out
-});
+    options.Events.OnTokenValidated = async context =>
+    {
+        string token = context.TokenEndpointResponse.AccessToken;
+        var handler = new JwtSecurityTokenHandler();
+        var parsedJwt = handler.ReadJwtToken(token);
+
+        // For some reason, this is not enough.
+        // The `role` claim is just being set to "role" as the claim type.
+        // But Microsoft requires using their enum, `ClaimTypes.Role` if you want to use the claims with the `[Authorize(Roles = "...")]` Annotation.
+        // So, we need to convert any "role" claims in the JWT to the actual Microsoft enum for them to be properly picked up...
+        // So convert them here I guess...
+        var updatedClaims = parsedJwt.Claims.ToList().Select(c =>
+        {
+            return c.Type == "role" ? new Claim(ClaimTypes.Role, c.Value) : c;
+        });
+
+
+        // Finally, use the new claims list and add a new `Identity` that contains them.
+        context.Principal.AddIdentity(new ClaimsIdentity(updatedClaims));
+    };
+})
+;
 builder.Services.AddScoped<ErrorHandlingService>();
 
 var app = builder.Build();

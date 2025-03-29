@@ -19,6 +19,38 @@ This app uses a running Keycloak instance that has been set up with:
 
 The redacted secret can be obtained by logging into Keycloak using `admin` and looking at the registered `Clients`.
 
+### Authorisation roles
+
+The app expects the OAuth JWT to possess one or more of these four roles:
+- `transactionnotes-subscriber` : allows closing down of the account, and managing users
+- `transactionnotes-admin` : allows managing users, managing bank feeds
+- `transactionnotes-write` : allows adding attachments and annotations to bank transactions
+- `transactionnotes-read`  : allows reading the bank transactions and downloading attachments
+
+These roles are added into the Keycloak as Realm Roles in the realm `transactionnotes`. 
+
+![](readme-images/realm-roles.png)
+
+Once these roles have been created, a mapping is required to place them into the location that the ASP.NET Authentication library expects them to be located in the JWT token. Create a `Realm Mapper`.
+
+![](readme-images/realm-role-mapper.png)
+
+
+Configure the mapper, to state that the path of the roles in under the top level key `role` (singular not plural).
+
+![](readme-images/realm-role-mapper-settings.png)
+
+Reference: https://stackoverflow.com/a/58043503/41410
+
+
+## Bug in roles and its remediation
+
+There is a bug in the Microsoft role handling which does not extract the role correctly. So an extra remediation is required. Reference: https://stackoverflow.com/a/58043503/41410
+
+This has been added to the code.
+
+
+
 
 ## Docker Compose
 
@@ -42,8 +74,7 @@ The most convenient way to deploy .Net Aspire apps to the public is to host them
 - On GitHub, click `Actions`
 - Open the github workflow `azure-dev.yaml`, and click the `Run workflow` button
 
-![](https://github.com/pngan/transactionnotes/blob/main/github-deploy.png)
-
+![](readme-images/github-deploy.png)
 ### Open the Aspire Dashboard and view App
 
 To get the Aspire Dashboard showing in Azure
@@ -56,7 +87,7 @@ Or
     - `Open Dashboard`
 
 
-![](https://github.com/pngan/transactionnotes/blob/main/github-output.png)
+![](readme-images/github-output.png)
 
 - You must first give your user Contributor permission to the `Container Apps Managed Environments`. Otherwise you will get the error: "Could not authenticate user with requested resource."
     - [Open Azure Portal](https://portal.azure.com)
@@ -71,7 +102,7 @@ Or
     - `Review + assign`
 
 
-![](https://github.com/pngan/transactionnotes/blob/main/azure-iam.png)
+![](readme-images/azure-iam.png)
 
 
 ### Tear down the deployment

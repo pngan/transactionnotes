@@ -64,7 +64,9 @@ else
         {
             forecasts = await WeatherApi.GetWeatherAsync();
         }
-        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Unauthorized || ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
+        catch (HttpRequestException ex) when (
+               ex.StatusCode == System.Net.HttpStatusCode.Unauthorized 
+            || ex.StatusCode == System.Net.HttpStatusCode.Forbidden)
         {
             errorMessage = "You are not permitted to view this data. Redirecting to login...";
             //await Task.Delay(3000); // Wait for 3 seconds before redirecting

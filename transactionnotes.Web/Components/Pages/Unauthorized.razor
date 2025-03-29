@@ -27,7 +27,7 @@
 
     private void Login()
     {
-        string returnUrlParam = string.IsNullOrEmpty(ReturnUrl) ? "/" : ReturnUrl;
+        string returnUrlParam = string.IsNullOrEmpty(ReturnUrl) ? Navigation.Uri : ReturnUrl;
         Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(returnUrlParam)}", true);
     }
 
