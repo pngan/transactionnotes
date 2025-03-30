@@ -3,55 +3,57 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
-    <div class="top-row ps-3 navbar navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="">transactionnotes</a>
-        </div>
-    </div>
 
-    <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<div class="top-row ps-3 navbar navbar-dark">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">transactionnotes</a>
+	</div>
+</div>
 
-    <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-        <nav class="nav flex-column">
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
-                </NavLink>
-            </div>
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="counter">
-                    <span class="bi bi-plus-square-fill" aria-hidden="true"></span> Counter
-                </NavLink>
-            </div>
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+	<nav class="nav flex-column">
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+				<span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
+			</NavLink>
+		</div>
 
-            @if (User?.IsInRole("transactionnotes-write") == true)
-            {
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="weather">
-                        <span class="bi bi-list-nested" aria-hidden="true"></span> Weather
-                    </NavLink>
-                </div>
-            }
-        </nav>
-    </div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="counter">
+				<span class="bi bi-plus-square-fill" aria-hidden="true"></span> Counter
+			</NavLink>
+		</div>
+
+
+		@if (User?.IsInRole("transactionnotes-write") == true)
+		{
+			<div class="nav-item px-3">
+				<NavLink class="nav-link" href="weather">
+					<span class="bi bi-list-nested" aria-hidden="true"></span> Weather
+				</NavLink>
+			</div>
+		}
+	</nav>
+</div>
 
 
 @code {
-    private ClaimsPrincipal? User;
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        User = authState.User;
-        var inRole = User?.IsInRole("transactionnotes-write");
+	private ClaimsPrincipal? User;
+	protected override async Task OnInitializedAsync()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+		User = authState.User;
+		var inRole = User?.IsInRole("transactionnotes-write");
 
-        var roles = User?.Identities.SelectMany(i =>
-            {
-            return i.Claims
-                .Where(c => c.Type == i.RoleClaimType)
-                .Select(c => c.Value)
-                .ToList();
-            });
-        
-    }
+		var roles = User?.Identities.SelectMany(i =>
+			{
+				return i.Claims
+				.Where(c => c.Type == i.RoleClaimType)
+				.Select(c => c.Value)
+				.ToList();
+			});
+
+	}
 }
