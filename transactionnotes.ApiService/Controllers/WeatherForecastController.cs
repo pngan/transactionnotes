@@ -5,7 +5,7 @@ namespace transactionnotes.ApiService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Roles = "transactionnotes-admin")] // This applies authorization to all endpoints in the controller
+[Authorize(Roles = "transactionnotes-write")] // This applies authorization to all endpoints in the controller
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

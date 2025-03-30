@@ -2,8 +2,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
-@if (User?.Identity?.IsAuthenticated == true)
-{
+
     <div class="top-row ps-3 navbar navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="">transactionnotes</a>
@@ -36,14 +35,7 @@
             }
         </nav>
     </div>
-}
-else
-{
-    <p>Please log in to access the application.</p>
-    <NavLink class="nav-link" href="login">
-        <span class="bi bi-list-nested" aria-hidden="true"></span> Login
-    </NavLink>
-}
+
 
 @code {
     private ClaimsPrincipal? User;
