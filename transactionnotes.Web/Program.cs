@@ -25,14 +25,13 @@ builder.Services.AddTransient<AuthenticatedHttpClientHandler>();
 builder.Services.AddTransient<DebuggingHttpHandler>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
-    {
-        // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
-        // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-        client.BaseAddress = new("https+http://apiservice");
-    })
+{
+    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+    client.BaseAddress = new("https+http://apiservice");
+})
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
     .AddHttpMessageHandler<DebuggingHttpHandler>();
-
 
 builder.Services.AddHttpContextAccessor();
 // Specify in appsettings.Development.json for local development, or use environment variables in production
@@ -72,6 +71,7 @@ builder.Services.AddAuthentication(options =>
     options.Scope.Add("email");
     options.CallbackPath = "/signin-oidc"; // Callback path for the OIDC provider
     options.SignedOutCallbackPath = "/signout-callback-oidc"; // Callback path for sign-out
+    options.SignOutScheme = OpenIdConnectDefaults.AuthenticationScheme; // Use the OIDC scheme for sign-out
     options.Events.OnTokenValidated = async context =>
     {
         string token = context.TokenEndpointResponse.AccessToken;
@@ -121,6 +121,12 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();
+
+app.MapPost("/account/logout", async (HttpContext context) =>
+{
+    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    await context.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+});
 
 // Add authentication and authorization middleware
 app.UseAuthentication();
