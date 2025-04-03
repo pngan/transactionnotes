@@ -127,6 +127,16 @@ app.MapPost("/account/logout", async (HttpContext context) =>
     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     await context.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
 });
+app.MapPost("/account/login", async (HttpContext context) =>
+{
+    var redirectUri = "/";
+    var properties = new AuthenticationProperties { RedirectUri = redirectUri };
+
+    if ((context?.User?.Identity == null) || !context.User.Identity.IsAuthenticated)
+    {
+        await context.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, properties);
+    }
+});
 
 // Add authentication and authorization middleware
 app.UseAuthentication();

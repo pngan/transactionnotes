@@ -12,16 +12,28 @@
 			<AuthorizeView>
 				<Authorized>
 					<div class="top-row px-4">
-						<form action="Account/Logout" method="post">
+						<form action="/account/logout" method="post">
 							<AntiforgeryToken />
 							@* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
 							<button type="submit" class="dropdown-item notify-item">
 								<i class="ri-logout-box-line"></i>
-								<span>Logout</span>
+								<span>Log Out</span>
 							</button>
 						</form>
 					</div>
 				</Authorized>
+				<NotAuthorized>
+					<div class="top-row px-4">
+						<form action="/account/login" method="post">
+							<AntiforgeryToken />
+							@* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
+							<button type="submit" class="dropdown-item notify-item">
+								<i class="ri-logout-box-line"></i>
+								<span>Login</span>
+							</button>
+						</form>
+					</div>
+				</NotAuthorized>
 			</AuthorizeView>
 		</CascadingAuthenticationState>
 
