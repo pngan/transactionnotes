@@ -14,11 +14,14 @@
   <ItemGroup>
     <ProjectReference Include="..\transactionnotes.ApiService\transactionnotes.ApiService.csproj" />
     <ProjectReference Include="..\transactionnotes.Web\transactionnotes.Web.csproj" />
+    <ProjectReference Include="..\transactionnotes.Database\CentralDb\CentralDb.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.1.0" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.0" />
     <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.1.0-preview.1.25121.10" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.2.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="8.0.1" />
   </ItemGroup>
 
 </Project>
