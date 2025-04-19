@@ -157,3 +157,16 @@ cd transactionnotes\transactionnotes.AppHost
 azd pipeline config
 ```
 This will prompt you for the missing secret values and store them with the Actions in the source repo.
+
+## notes
+
+Add a service to .NET Aspire
+```
+# For example, create a new console app
+mkdir transactionnotes.Database
+cd transactionnotes.Database
+dotnet new console -o Central
+
+# Add the new console to the AppHost project
+dotnet add .\transactionnotes.AppHost\transactionnotes.AppHost.csproj reference .\transactionnotes.Database\Central\Central.csproj
+```
