@@ -1,5 +1,5 @@
-﻿using Dapper;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace CentralDb;
 
@@ -9,22 +9,15 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        CreateHostBuilder(args)
-            .Build()
+        IHostApplicationBuilder builder = CreateHostBuilder(args)
+            .AddServiceDefaults()
             .MigrateDatabase<Program>();
+
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
+    public static IHostApplicationBuilder CreateHostBuilder(string[] args)
     {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureServices((hostContext, services) => {
-              //  services.AddSingleton<ISomeService, SomeService>(); // Register a service
-                // Add other services and configurations here
-            })
-            .ConfigureAppConfiguration((hostContext, config) => {
-                config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true); // Load from appsettings.json
-                // Load other configurations here
-            });
+        return Host.CreateApplicationBuilder(args);
     }
 
 }
