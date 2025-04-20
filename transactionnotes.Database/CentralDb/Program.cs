@@ -6,41 +6,32 @@ using Microsoft.Extensions.Configuration;
 
 class Program
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
-
-        // Build the configuration
-        var configuration = new ConfigurationBuilder()
-            //.SetBasePath(Directory.GetCurrentDirectory()) // Set the base path for configuration files
-            //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true) // Load appsettings.json
-            //.AddEnvironmentVariables() // Optionally add environment variables
-            .Build();
-
-
-        var connectionString = configuration.GetConnectionString("centraldbserver");
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__centraldb");
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new InvalidOperationException("Connection string 'ConnectionStrings__centraldb' not found in environment variables.");
+        }
 
         // Pass the configuration to the repository
-        var repo = new DataRepository(configuration);
-        Thread.Sleep(5000);
-        Console.WriteLine("Hello, World!");
-
-
-
+        var repo = new DataRepository(connectionString);
+        int? res = await repo.GetAsync<int>("hi");
+        Console.WriteLine($"Result = {res}");
     }
 
-    public class DataRepository(IConfiguration config)
+    public class DataRepository(string connectionString)
     {
-        public async Task GetAsync(string id)
+        public async Task<T?> GetAsync<T>(string id)
         {
-            var connectionString = config.GetConnectionString("centraldbserver");
-
             await using var connection = new Npgsql.NpgsqlConnection(connectionString);
             await connection.OpenAsync();
 
-            var query = "SELECT 1";
-            var result = await connection.QueryFirstOrDefaultAsync<int>(query);
+            const string query = "SELECT 1";
+            var result = await connection.QueryFirstOrDefaultAsync<T>(query);
 
             Console.WriteLine($"Query Result: {result}");
+            return result;
         }
     }
 }
