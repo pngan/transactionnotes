@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace transactionnotes.ApiService.Controllers
@@ -7,10 +8,18 @@ namespace transactionnotes.ApiService.Controllers
     [ApiController]
     public class PingController : ControllerBase
     {
+
         [HttpGet]
         public string Get()
         {
             return "Pong";
+        }
+
+        [HttpGet("secure")]
+        [Authorize]
+        public string SecurePing()
+        {
+            return "Secure Pong";
         }
     }
 }

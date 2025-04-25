@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace CentralDb;
-
-using Microsoft.Extensions.Configuration;
 
 class Program
 {

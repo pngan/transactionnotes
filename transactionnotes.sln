@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralDb", "transactionnot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "transactionnotes.Tests", "transactionnotes.Tests\transactionnotes.Tests.csproj", "{285D03CE-421C-183A-7303-7CCB40F0178F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{77FA553A-8779-4A2A-A110-29D1BB68253C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EEA0155E-64A0-996F-EF05-DA70B47E965E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{285D03CE-421C-183A-7303-7CCB40F0178F} = {77FA553A-8779-4A2A-A110-29D1BB68253C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB7391FB-B016-4470-863A-B8C98147F5D9}

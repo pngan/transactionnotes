@@ -15,9 +15,9 @@ var databasecentralusername = builder.AddParameter("databasecentralusername", ce
 var databasecentralpassword = builder.AddParameter("databasecentralpassword", centralDbPassword, publishValueAsDefault: false, secret: true);
 
 var centraldbserver = builder.AddPostgres(
-    "centraldbserver", databasecentralusername, databasecentralpassword, 15432)
-    .WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
-    .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5051));
+    "centraldbserver", databasecentralusername, databasecentralpassword, 15432);
+    //.WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
+    //.WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5051));
 
 
 var centraldb = centraldbserver.AddDatabase("centraldb", "centraldb");
@@ -34,5 +34,7 @@ builder.AddProject<Projects.transactionnotes_Web>("webfrontend")
     .WithExternalHttpEndpoints()
     .WithReference(apiService)
     .WaitFor(apiService);
+
+//builder.AddProject<Projects.transactionnotes_Tests>("tests");
 
 builder.Build().Run();
