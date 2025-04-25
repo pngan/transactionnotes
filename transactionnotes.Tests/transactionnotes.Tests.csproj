@@ -8,16 +8,12 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
-
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing" Version="9.2.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0-preview-25107-01" />
-    <PackageReference Include="NUnit" Version="4.3.2" />
-    <PackageReference Include="NUnit.Analyzers" Version="4.7.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="Aspire.Hosting.Testing" Version="9.0.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,7 +25,7 @@
     <Using Include="Microsoft.Extensions.DependencyInjection" />
     <Using Include="Aspire.Hosting.ApplicationModel" />
     <Using Include="Aspire.Hosting.Testing" />
-    <Using Include="NUnit.Framework" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
