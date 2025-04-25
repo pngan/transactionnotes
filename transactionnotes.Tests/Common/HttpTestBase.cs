@@ -13,7 +13,7 @@ public abstract class HttpTestBase(string resourceName) : IAsyncLifetime
 
     private string ResourceName { get; } = resourceName;
 
-    public async Task InitializeAsync()
+    public async ValueTask InitializeAsync()
     {
         _appHost = await DistributedApplicationTestingBuilder.CreateAsync<Projects.transactionnotes_AppHost>();
         _appHost.Services.ConfigureHttpClientDefaults(clientBuilder =>
@@ -30,7 +30,7 @@ public abstract class HttpTestBase(string resourceName) : IAsyncLifetime
         await _resourceNotificationService.WaitForResourceAsync(ResourceName, KnownResourceStates.Running).WaitAsync(TimeSpan.FromSeconds(30));
     }
 
-    public async Task DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         HttpClient.Dispose();
         await _app.DisposeAsync();
