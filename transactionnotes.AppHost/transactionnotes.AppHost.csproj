@@ -15,14 +15,14 @@
     <ProjectReference Include="..\transactionnotes.ApiService\transactionnotes.ApiService.csproj" />
     <ProjectReference Include="..\transactionnotes.Web\transactionnotes.Web.csproj" />
     <ProjectReference Include="..\transactionnotes.Database\CentralDb\CentralDb.csproj" />
-    <ProjectReference Include="..\transactionnotes.Tests\transactionnotes.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.0" />
-    <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.1.0-preview.1.25121.10" />
-    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.2.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="8.8.0" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.1" />
+    <PackageReference Include="Aspire.Hosting.Docker" Version="9.2.1-preview.1.25222.1" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.2.1-preview.1.25222.1" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.2.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols" Version="8.9.0" />
   </ItemGroup>
 
 </Project>
