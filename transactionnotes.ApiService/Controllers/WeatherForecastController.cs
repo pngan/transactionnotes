@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace transactionnotes.ApiService.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/v1/[controller]")]
 [Authorize(Roles = "transactionnotes-write")] // This applies authorization to all endpoints in the controller
 public class WeatherForecastController : ControllerBase
 {
