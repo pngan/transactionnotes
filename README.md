@@ -10,6 +10,14 @@ This app uses a running Keycloak instance. First we need to create a realm calle
 
 Select the `transactionnotes` realm from the drop down menu, and create a client called `transactionnotes`, using the Client Type `OpenId Connect` and a ClientId of `transactionnotes`
 
+### Realm Email
+The email settings for the realm should be set up as follows. You need a smtp server - we  used a free [Brevo](https://www.brevo.com/) account for this. Once an account has been created at Brevo, the email settings should be specified as follows:
+
+
+![](readme-images/realm-email.png)
+
+## Create a Client App
+
 
 ![](readme-images/create-client.png)
 
