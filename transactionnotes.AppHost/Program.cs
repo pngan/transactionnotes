@@ -22,13 +22,20 @@ var centraldbserver = builder.AddPostgres(
 
 var centraldb = centraldbserver.AddDatabase("centraldb", "centraldb");
 
-var centralDbService = builder.AddProject<Projects.CentralDb>("centraldbservice")
+var centralDbService= builder.AddProject<Projects.CentralDb>("centraldb-service")
     .WithReference(centraldb)
     .WaitFor(centraldb);
 
+var centralDbMigration = builder.AddProject<Projects.centraldb_migration>("centraldb-migration")
+    .WithReference(centraldb)
+    .WaitFor(centraldb);
+
+//var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice")
+//    .WithReference(centralDbService)
+//    .WaitForCompletion(centralDbService);
 var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice")
-    .WithReference(centralDbService)
-    .WaitForCompletion(centralDbService);
+    .WithReference(centralDbMigration)
+    .WaitForCompletion(centralDbMigration);
 
 builder.AddProject<Projects.transactionnotes_Web>("webfrontend")
     .WithExternalHttpEndpoints()

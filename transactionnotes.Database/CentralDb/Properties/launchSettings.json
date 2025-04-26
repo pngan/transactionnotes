@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CentralDb": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
