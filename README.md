@@ -196,8 +196,8 @@ Add a service to .NET Aspire
 # For example, create a new console app
 mkdir transactionnotes.Database
 cd transactionnotes.Database
-dotnet new console -o Central
+dotnet new worker -o centraldb-migration
 
 # Add the new console to the AppHost project
-dotnet add .\transactionnotes.AppHost\transactionnotes.AppHost.csproj reference .\transactionnotes.Database\Central\Central.csproj
+dotnet add .\transactionnotes.AppHost\transactionnotes.AppHost.csproj reference .\transactionnotes.Database\centraldb-migration\centraldb-migration.csproj
 ```
