@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -22,9 +21,9 @@ var centraldbserver = builder.AddPostgres(
 
 var centraldb = centraldbserver.AddDatabase("centraldb", "centraldb");
 
-var centralDbService= builder.AddProject<Projects.CentralDb>("centraldb-service")
-    .WithReference(centraldb)
-    .WaitFor(centraldb);
+//var centralDbService= builder.AddProject<Projects.CentralDb>("centraldb-service")
+//    .WithReference(centraldb)
+//    .WaitFor(centraldb);
 
 var centralDbMigration = builder.AddProject<Projects.centraldb_migration>("centraldb-migration")
     .WithReference(centraldb)
