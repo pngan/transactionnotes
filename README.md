@@ -4,9 +4,27 @@ An application that you can add your own notes and attachments to bank transacti
 
 ## Pre-requisite: Keycloak
 
-This app uses a running Keycloak instance that has been set up with:
-- a Realm called `transactionnotes` that is configured with OpenId Connect standard flow (Authorization Code Flow)
-- This Realm will have a client registered, with a client Id called `transactionnotes` and a client secret
+This app uses a running Keycloak instance. First we need to create a realm called `transactionnotes`. This is done by selecting `Create Realm`. Name this realm `transactionnotes`.
+
+![](readme-images/create-realm.png)
+
+Select the `transactionnotes` realm from the drop down menu, and create a client called `transactionnotes`, using the Client Type `OpenId Connect` and a ClientId of `transactionnotes`
+
+
+![](readme-images/create-client.png)
+
+- Client Authentication is `ON`
+- Authorization is `ON`
+- Authentication Flow is set to: `Standard Flow` and `Direct Access Grant`
+- The Client Credentials is saved in password manager under `transactionnotes`
+
+ with a client Id called `transactionnotes` and a client secret
+
+Once the client has been created, set the `redirect_url` to be wildcard `*`. This is ok for development, but in a production setting this should be more specific.
+
+
+![](readme-images/redirect-url.png)
+
 
 - Information about this Realm should be specified in the `appsettings.Development.json` of the `transactionnotes.AppHost` project, using a section like.
 ```
@@ -31,7 +49,10 @@ These roles are added into the Keycloak as Realm Roles in the realm `transaction
 
 ![](readme-images/realm-roles.png)
 
-Once these roles have been created, a mapping is required to place them into the location that the ASP.NET Authentication library expects them to be located in the JWT token. Create a `Realm Mapper`.
+## Client Scope Mappers
+### Map Path
+
+Once these roles have been created, a mapping is required to place them into the location that the ASP.NET Authentication library expects them to be located in the JWT token. Click on `roles` and then edit the  `realm roles`.
 
 ![](readme-images/realm-role-mapper.png)
 
@@ -42,6 +63,16 @@ Configure the mapper, to state that the path of the roles in under the top level
 
 Reference: https://stackoverflow.com/a/58043503/41410
 
+### Map aud (audience claim)
+Add a mapper by Configuration - choose `Audience`
+
+![](readme-images/aud0.png)
+
+Then add `transactionnotes` as an addition `aud` claim to the JWT token.
+
+![](readme-images/aud1.png)
+
+If this is not done, then when viewing the Weather page, the even though it has the `transactionnotes-writer` authorisation, it will still say that you are not authorised - this is because the `aud` needs to inlcude `transactionnotes`.
 
 ## Bug in roles and its remediation
 
