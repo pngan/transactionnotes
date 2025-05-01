@@ -9,8 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="SqlScripts\RunAlways\startup-00010.sql" />
+    <EmbeddedResource Include="SqlScripts\RunAlways\startup-00020.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="dbup-core" Version="6.0.4" />
     <PackageReference Include="dbup-postgresql" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SqlScripts\RunOnce\" />
   </ItemGroup>
 </Project>

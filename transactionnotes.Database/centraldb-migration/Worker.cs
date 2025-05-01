@@ -1,5 +1,7 @@
 using System.Reflection;
 using DbUp;
+using DbUp.Engine;
+using DbUp.Support;
 
 namespace centraldb_migration;
 
@@ -15,11 +17,14 @@ public class Worker(ILogger<Worker> logger, IConfiguration configuration) : Back
 
         var upgrader = DeployChanges.To
             .PostgresqlDatabase(connection)
-            .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
+            .WithScriptsEmbeddedInAssembly(
+                    Assembly.GetExecutingAssembly(),
+                    script => script.StartsWith("centraldb_migration.SqlScripts.RunAlways."),
+                    new SqlScriptOptions { ScriptType = ScriptType.RunAlways })
             .LogToConsole()
             .Build();
-        var result = upgrader.PerformUpgrade();
 
+        var result = upgrader.PerformUpgrade();
         if (!result.Successful)
         {
             logger.LogError(result.Error, "An error occurred while migrating the PostgreSQL database {DatabaseName}", "centralDB");
