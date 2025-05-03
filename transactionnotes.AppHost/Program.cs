@@ -4,6 +4,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var centralDbUsername = builder.Configuration["Database:Central:Admin:Username"];
 var centralDbPassword = builder.Configuration["Database:Central:Admin:Password"];
+var centralDatabaseName = builder.Configuration["Database:Central:Name"];
 
 if (string.IsNullOrEmpty(centralDbUsername) || string.IsNullOrEmpty(centralDbPassword))
 {
@@ -15,11 +16,11 @@ var databasecentralpassword = builder.AddParameter("databasecentralpassword", ce
 
 var centraldbserver = builder.AddPostgres(
     "centraldbserver", databasecentralusername, databasecentralpassword, 15432)
-    //.WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
+    .WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
     .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5051));
 
 
-var centraldb = centraldbserver.AddDatabase("centraldb", "centraldb");
+var centraldb = centraldbserver.AddDatabase(centralDatabaseName);
 
 //var centralDbService= builder.AddProject<Projects.CentralDb>("centraldb-service")
 //    .WithReference(centraldb)
