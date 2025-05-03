@@ -16,7 +16,7 @@ var databasecentralpassword = builder.AddParameter("databasecentralpassword", ce
 
 var centraldbserver = builder.AddPostgres(
     "centraldbserver", databasecentralusername, databasecentralpassword, 15432)
-    .WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
+    //.WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
     .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5051));
 
 

@@ -9,17 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="SqlScripts\SchemaOwner\010-Roles\20250502.sql" />
+    <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250503.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="dbup-core" Version="6.0.4" />
     <PackageReference Include="dbup-postgresql" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SqlScripts\SchemaOwner\020-Schema\" />
-    <Folder Include="SqlScripts\SchemaOwner\030-StaticData\" />
+    <Folder Include="SqlScripts\SchemaOwner\030-CfgData\" />
   </ItemGroup>
 </Project>
