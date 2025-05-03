@@ -16,23 +16,15 @@ var databasecentralpassword = builder.AddParameter("databasecentralpassword", ce
 
 var centraldbserver = builder.AddPostgres(
     "centraldbserver", databasecentralusername, databasecentralpassword, 15432)
-    //.WithPgWeb(pgWeb => pgWeb.WithHostPort(5050))
     .WithPgAdmin(pgAdmin => pgAdmin.WithHostPort(5051));
 
 
 var centraldb = centraldbserver.AddDatabase(centralDatabaseName);
 
-//var centralDbService= builder.AddProject<Projects.CentralDb>("centraldb-service")
-//    .WithReference(centraldb)
-//    .WaitFor(centraldb);
-
 var centralDbMigration = builder.AddProject<Projects.centraldb_migration>("centraldb-migration")
     .WithReference(centraldb)
     .WaitFor(centraldb);
 
-//var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice")
-//    .WithReference(centralDbService)
-//    .WaitForCompletion(centralDbService);
 var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apiservice")
     .WithReference(centralDbMigration)
     .WaitForCompletion(centralDbMigration);
