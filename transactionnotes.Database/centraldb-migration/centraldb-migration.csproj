@@ -9,8 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="SqlScripts\RunAlways\startup-00010.sql" />
-    <EmbeddedResource Include="SqlScripts\RunAlways\startup-00020.sql" />
+    <EmbeddedResource Include="SqlScripts\SchemaOwner\010-Roles\20250502.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SqlScripts\RunOnce\" />
+    <Folder Include="SqlScripts\SchemaOwner\020-Schema\" />
+    <Folder Include="SqlScripts\SchemaOwner\030-StaticData\" />
   </ItemGroup>
 </Project>
