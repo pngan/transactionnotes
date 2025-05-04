@@ -1,7 +1,10 @@
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using Dapper;
 using DbUp;
+using DbUp.Engine;
+using DbUp.ScriptProviders;
 using Npgsql;
 
 namespace centraldb_migration;
@@ -31,7 +34,7 @@ public class Worker(ILogger<Worker> logger, IConfiguration configuration) : Back
         }
         else
         {
-            logger.LogWarning("Role 'schema_owner' does not exist in the database.");
+            logger.LogWarning("Creating role 'schema_owner'.");
             var sqlCommands =
                 $"CREATE ROLE schema_owner NOLOGIN;" +
                 $"GRANT CREATE ON DATABASE {databaseName} TO schema_owner;" +
@@ -56,9 +59,15 @@ public class Worker(ILogger<Worker> logger, IConfiguration configuration) : Back
             $"Username={migrationuserUsername};Password");
         var connectionMigration = Regex.Replace(tmp, "Password=.*;Database", $"Password={migrationuserPassword};Database");
 
+        var options = new FileSystemScriptOptions
+        {
+            // Patterns to search the file system for. Set to "*.sql" by default.
+            Extensions = new[] { "*.psql" },
+        };
+
         var schemaUpgrader = DeployChanges.To
             .PostgresqlDatabase(connectionMigration)
-            .WithScriptsAndCodeEmbeddedInAssembly(
+            .WithScriptsEmbeddedInAssembly(
                 Assembly.GetExecutingAssembly(),
                 code => code.StartsWith("centraldb_migration.SqlScripts.SchemaOwner.")
             )

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250504.psql" />
     <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250503.sql" />
   </ItemGroup>
 
