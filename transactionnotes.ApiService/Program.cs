@@ -45,8 +45,14 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddControllers();
 
+builder.Services.AddEndpointsApiExplorer();
+
+
+
 var app = builder.Build();
 
+// Add ValidateKeycloakJWTMiddleware to the application
+//app.AddUserMiddleware();
 
 // Use authentication & authorization
 app.UseAuthentication();
@@ -55,7 +61,7 @@ app.UseAuthorization();
 
 
 // Configure the HTTP request pipeline.
-app.UseExceptionHandler();
+//app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {

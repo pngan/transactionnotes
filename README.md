@@ -82,6 +82,16 @@ Then add `transactionnotes` as an addition `aud` claim to the JWT token.
 
 If this is not done, then when viewing the Weather page, the even though it has the `transactionnotes-writer` authorisation, it will still say that you are not authorised - this is because the `aud` needs to inlcude `transactionnotes`.
 
+
+## REST API Testing with Visual Studio Code
+
+To use the `.http` files in the `transactionnotes.ApiService/http/` directory for testing the API endpoints, you need to install the [REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) in Visual Studio Code.
+
+- This extension allows you to send HTTP requests and view responses directly within VS Code.
+- It supports environment variables and can securely reference secrets from a `.env` file.
+
+After installing, you can open any `.http` file and click "Send Request" above a request to execute it.
+
 ## Bug in roles and its remediation
 
 There is a bug in the Microsoft role handling which does not extract the role correctly. So an extra remediation is required. Reference: https://stackoverflow.com/a/58043503/41410
