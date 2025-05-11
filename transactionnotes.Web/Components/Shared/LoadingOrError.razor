@@ -1,0 +1,21 @@
+@typeparam TData
+
+@if (IsLoading)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <p class="text-danger"><em>@ErrorMessage</em></p>
+}
+else if (Data is not null)
+{
+    @ChildContent(Data)
+}
+
+@code {
+    [Parameter] public bool IsLoading { get; set; }
+    [Parameter] public string? ErrorMessage { get; set; }
+    [Parameter] public TData? Data { get; set; }
+    [Parameter] public RenderFragment<TData?> ChildContent { get; set; } = default!;
+}

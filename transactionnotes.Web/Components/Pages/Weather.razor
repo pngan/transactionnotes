@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNetCore.Authorization
 @using transactionnotes.Web.Services
+@using transactionnotes.Web.Components.Shared
 
 @inject ErrorHandlingService ErrorHandler
 @attribute [Authorize]
@@ -18,41 +19,37 @@
 
 <p>This component demonstrates showing data loaded from a backend API service.</p>
 
-@if (forecasts == null)
-{
-    if (errorMessage != null)
-    {
-        <p><em>@errorMessage</em></p>
-    }
-    else
-    {
-        <p><em>Loading...</em></p>
-    }
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th aria-label="Temperature in Celsius">Temp. (C)</th>
-                <th aria-label="Temperature in Farenheit">Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
+<LoadingOrError TData="WeatherForecast[]"
+                IsLoading="forecasts == null && errorMessage == null"
+                ErrorMessage="@errorMessage"
+                Data="forecasts">
+    <ChildContent Context="data">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <th>Date</th>
+                    <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                    <th aria-label="Temperature in Farenheit">Temp. (F)</th>
+                    <th>Summary</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @if (data != null)
+                {
+                    foreach (var forecast in data)
+                    {
+                        <tr>
+                            <td>@forecast.Date.ToShortDateString()</td>
+                            <td>@forecast.TemperatureC</td>
+                            <td>@forecast.TemperatureF</td>
+                            <td>@forecast.Summary</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </ChildContent>
+</LoadingOrError>
 
 @code {
     private WeatherForecast[]? forecasts;
