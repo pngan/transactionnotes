@@ -51,17 +51,24 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler();
+}
+
 // Add ValidateKeycloakJWTMiddleware to the application
-//app.AddUserMiddleware();
+app.AddUserMiddleware();
 
 // Use authentication & authorization
 app.UseAuthentication();
 app.UseAuthHeaderInspection();
 app.UseAuthorization();
-
-
-// Configure the HTTP request pipeline.
-//app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {

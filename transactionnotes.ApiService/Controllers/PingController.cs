@@ -8,7 +8,6 @@ namespace transactionnotes.ApiService.Controllers
     [ApiController]
     public class PingController : ControllerBase
     {
-
         [HttpGet]
         public string Get()
         {
