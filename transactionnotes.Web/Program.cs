@@ -23,7 +23,7 @@ builder.Services.AddOutputCache();
 
 builder.Services.AddTransient<AuthenticatedHttpClientHandler>();
 builder.Services.AddTransient<DebuggingHttpHandler>();
-builder.Services.AddTransient<EnsureSuccessStatusHandler>();
+builder.Services.AddTransient<ApiErrorHandler>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
 {
@@ -38,7 +38,7 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
     }
 })
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
-    .AddHttpMessageHandler<EnsureSuccessStatusHandler>()
+    .AddHttpMessageHandler<ApiErrorHandler>()
     .AddHttpMessageHandler<DebuggingHttpHandler>();
 
 builder.Services.AddHttpContextAccessor();

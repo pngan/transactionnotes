@@ -8,7 +8,7 @@ namespace transactionnotes.Web.Middleware
     /// <summary>
     /// DelegatingHandler that throws an exception if the response status code is not successful.
     /// </summary>
-    public class EnsureSuccessStatusHandler : DelegatingHandler
+    public class ApiErrorHandler : DelegatingHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
