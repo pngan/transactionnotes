@@ -27,10 +27,10 @@ namespace transactionnotes.ApiService.Middleware
                     {
                         var jwtToken = handler.ReadJwtToken(token);
                         var subject = jwtToken.Subject;
-                        //if (subject == null)
-                        //{
+                        if (subject == null)
+                        {
                             throw new AuthenticationException("Subject claim is missing from the keycloak JWT token");
-                        //}
+                        }
 
                         logger.LogInformation("Token expires: {Expiration}", jwtToken.ValidTo);
 
