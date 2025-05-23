@@ -20,5 +20,12 @@ namespace transactionnotes.ApiService.Controllers
         {
             return "Secure Pong";
         }
+
+        [HttpGet("allowed")]
+        [Authorize(Policy = "SessionPolicy")]
+        public string AllowedPing()
+        {
+            return "Allowed Pong";
+        }
     }
 }

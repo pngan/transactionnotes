@@ -1,3 +1,4 @@
+# Http file designed to be used with Visual Studio Code with REST Client extension.
 
 ### Get JWT token from Keycloak
 # @name getToken

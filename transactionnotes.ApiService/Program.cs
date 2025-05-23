@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using transactionnotes.ApiService.Authorization;
 using transactionnotes.ApiService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +49,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-
+builder.Services.AddSingleton<IAuthorizationHandler, SessionHandler>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("SessionPolicy", policy =>
+        policy.Requirements.Add(new SessionRequirement("Humpty")));
+}); 
 
 var app = builder.Build();
 
