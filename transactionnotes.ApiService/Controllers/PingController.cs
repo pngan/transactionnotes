@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using transactionnotes.ApiService.Authorization;
 
 namespace transactionnotes.ApiService.Controllers
 {
@@ -22,7 +23,8 @@ namespace transactionnotes.ApiService.Controllers
         }
 
         [HttpGet("allowed")]
-        [Authorize(Policy = "SessionPolicy")]
+        [Authorize(Policy = "CanWrite")]
+        //[RequiresReadPermission]
         public string AllowedPing()
         {
             return "Allowed Pong";

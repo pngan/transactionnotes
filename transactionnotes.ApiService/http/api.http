@@ -13,8 +13,15 @@ Accept: application/json
 
 ###
 
-### List users (replace with your actual endpoint if different)
+### Ping with Authentication
 GET http://localhost:5324/api/v1/ping/secure
+Authorization: Bearer {{getToken.response.body.access_token}}
+Accept: application/json
+
+###
+
+### Ping with Authorization and check if user is allowed
+GET http://localhost:5324/api/v1/ping/allowed
 Authorization: Bearer {{getToken.response.body.access_token}}
 Accept: application/json
 

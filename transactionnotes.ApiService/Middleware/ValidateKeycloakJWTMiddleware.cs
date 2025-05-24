@@ -1,11 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using transactionnotes.ApiService.Authorization;
 
 namespace transactionnotes.ApiService.Middleware
 {
-    public class ValidateKeycloakJWTMiddleware(RequestDelegate next, ILogger<AuthHeaderInspectionMiddleware> logger)
+    public class ValidateKeycloakJwtMiddleware(RequestDelegate next, ILogger<AuthHeaderInspectionMiddleware> logger)
     {
         public async Task InvokeAsync(HttpContext context)
         {
@@ -26,11 +26,16 @@ namespace transactionnotes.ApiService.Middleware
                     if (handler.CanReadToken(token))
                     {
                         var jwtToken = handler.ReadJwtToken(token);
+
+
+
                         var subject = jwtToken.Subject;
                         if (subject == null)
                         {
                             throw new AuthenticationException("Subject claim is missing from the keycloak JWT token");
                         }
+
+                        context.Items[HttpContextItems.UserJwtSub] = subject;
 
                         logger.LogInformation("Token expires: {Expiration}", jwtToken.ValidTo);
 
@@ -69,15 +74,6 @@ namespace transactionnotes.ApiService.Middleware
 
             // Call the next middleware in the pipeline
             await next(context);
-        }
-    }
-
-    // Extension method to make registration cleaner
-    public static class UserMiddlewareExtensions
-    {
-        public static IApplicationBuilder AddUserMiddleware(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<ValidateKeycloakJWTMiddleware>();
         }
     }
 }
