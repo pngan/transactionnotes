@@ -102,6 +102,15 @@ builder.Services.AddAuthentication(options =>
     };
 })
 ;
+
+// Configure Authorization Policies
+builder.Services.AddAuthorization(options =>
+{
+    // Claim-based policy
+    options.AddPolicy("CanWrite", policy =>
+        //policy.RequireClaim("Permission", "WritePermission"));
+    policy.RequireAuthenticatedUser());
+});
 builder.Services.AddScoped<ErrorHandlingService>();
 
 var app = builder.Build();

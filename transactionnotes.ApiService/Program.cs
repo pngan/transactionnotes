@@ -40,7 +40,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         // and enrich the ClaimsPrincipal with your internal roles.
         options.Events = new JwtBearerEvents
         {
-            OnTokenValidated = async context =>
+            OnTokenValidated =  context =>
             {
                 var subject = context.HttpContext.Items[HttpContextItems.UserJwtSub] as string;
 
@@ -140,7 +140,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 // Set the new ClaimsPrincipal for the current request
                // context.Principal = new ClaimsPrincipal(newIdentity);
 
-
+                return Task.CompletedTask;
 
 
 

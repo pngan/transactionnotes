@@ -16,15 +16,16 @@
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                     <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
                 </NavLink>
-            </div>
+			</div>
+			<AuthorizeView Roles="transactionnotes-write">
+				<div class="nav-item px-3">
+					<NavLink class="nav-link" href="counter">
+						<span class="bi bi-plus-square-fill" aria-hidden="true"></span> Counter
+					</NavLink>
+				</div>
+			</AuthorizeView>
 
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="counter">
-                    <span class="bi bi-plus-square-fill" aria-hidden="true"></span> Counter
-                </NavLink>
-            </div>
-
-            <AuthorizeView Roles="transactionnotes-write">
+            <AuthorizeView Policy="CanWrite">
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="weather">
                         <span class="bi bi-list-nested" aria-hidden="true"></span> Weather

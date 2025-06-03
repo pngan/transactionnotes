@@ -14,7 +14,7 @@ public class WeatherForecastController : ControllerBase
     };
 
     [HttpGet(Name = "GetWeatherForecast")]
-    [Authorize(Policy = "SessionPolicy")]
+    [Authorize(Policy = "CanWrite")]
     public IActionResult Get()
     {
         //if (!User.Identity?.IsAuthenticated ?? false)
