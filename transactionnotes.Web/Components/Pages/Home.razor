@@ -21,9 +21,10 @@
                         </form>
                     </div>
                     <div>
-                        <a href="#" class="text-secondary small" style="text-decoration: underline; cursor: pointer;" @onclick="Register">
-                            Create an account
-                        </a>
+                        <form action="/account/login" method="post" style="display:inline;">
+                            <AntiforgeryToken />
+                            <button type="submit" class="btn btn-link text-secondary small p-0 m-0 align-baseline" style="text-decoration: underline;">Create an account</button>
+                        </form>
                     </div>
                 </div>
             </div>
