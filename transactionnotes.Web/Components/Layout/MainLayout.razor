@@ -2,46 +2,41 @@
 
 @using Microsoft.AspNetCore.Components.Authorization
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-	</div>
-
-	<main>
-		<CascadingAuthenticationState>
-			<AuthorizeView>
-				<Authorized>
-					<div class="top-row px-4">
-						<form action="/account/logout" method="post">
-							<AntiforgeryToken />
-							@* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
-							<button type="submit" class="dropdown-item notify-item">
-								<i class="ri-logout-box-line"></i>
-								<span>Log Out</span>
-							</button>
-						</form>
-					</div>
-				</Authorized>
-				<NotAuthorized>
-					<div class="top-row px-4">
-						<form action="/account/login" method="post">
-							<AntiforgeryToken />
-							@* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
-							<button type="submit" class="dropdown-item notify-item">
-								<i class="ri-logout-box-line"></i>
-								<span>Login</span>
-							</button>
-						</form>
-					</div>
-				</NotAuthorized>
-			</AuthorizeView>
-		</CascadingAuthenticationState>
-
-		<article class="content px-4">
-			@Body
-		</article>
-	</main>
-</div>
+<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            <div class="page">
+                <div class="sidebar">
+                    <NavMenu />
+                </div>
+                <main>
+                    <div class="top-row px-4">
+                        <form action="/account/logout" method="post">
+                            <AntiforgeryToken />
+                            @* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
+                            <button type="submit" class="dropdown-item notify-item">
+                                <i class="ri-logout-box-line"></i>
+                                <span>Log Out</span>
+                            </button>
+                        </form>
+                    </div>
+                    <article class="content px-4">
+                        @Body
+                    </article>
+                </main>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <div class="page">
+                <main style="width:100%">
+                    <article class="content px-4">
+                        @Body
+                    </article>
+                </main>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
