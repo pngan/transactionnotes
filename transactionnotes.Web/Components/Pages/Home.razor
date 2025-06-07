@@ -8,22 +8,23 @@
 <CascadingAuthenticationState>
     <AuthorizeView>
         <NotAuthorized>
-            <div class="container text-center mt-5">
-                <h1 class="display-4 mb-3">Welcome to Transaction Notes</h1>
-                <p class="lead mb-4">
-                    Securely track, manage, and analyze your transactions.<br />
-                    Get started by logging in or creating a new account.
-                </p>
-                <div class="d-flex justify-content-center gap-3 mb-2">
-                    <form action="/account/login" method="post">
-                        <AntiforgeryToken />
-                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
-                    </form>
-                </div>
-                <div>
-                    <a href="#" class="text-secondary small" style="text-decoration: underline; cursor: pointer;" @onclick="Register">
-                        Don't have an account? Create one
-                    </a>
+            <div class="hero-bg d-flex align-items-center justify-content-center min-vh-100">
+                <div class="container text-center p-5 bg-white bg-opacity-75 rounded-4 shadow-lg" style="max-width: 480px;">
+                    <h1 class="display-4 mb-3">Transaction Notes</h1>
+                    <p class="lead mb-4">
+                        Securely track, manage, and analyze your transactions.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 mb-2">
+                        <form action="/account/login" method="post">
+                            <AntiforgeryToken />
+                            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                        </form>
+                    </div>
+                    <div>
+                        <a href="#" class="text-secondary small" style="text-decoration: underline; cursor: pointer;" @onclick="Register">
+                            Create an account
+                        </a>
+                    </div>
                 </div>
             </div>
         </NotAuthorized>
