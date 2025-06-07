@@ -14,12 +14,16 @@
                     Securely track, manage, and analyze your transactions.<br />
                     Get started by logging in or creating a new account.
                 </p>
-                <div class="d-flex justify-content-center gap-3">
+                <div class="d-flex justify-content-center gap-3 mb-2">
                     <form action="/account/login" method="post">
                         <AntiforgeryToken />
                         <button type="submit" class="btn btn-primary btn-lg">Login</button>
                     </form>
-                    <button class="btn btn-outline-secondary btn-lg" @onclick="Register">Create Account</button>
+                </div>
+                <div>
+                    <a href="#" class="text-secondary small" style="text-decoration: underline; cursor: pointer;" @onclick="Register">
+                        Don't have an account? Create one
+                    </a>
                 </div>
             </div>
         </NotAuthorized>
