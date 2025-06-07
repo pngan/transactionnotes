@@ -9,11 +9,17 @@ using transactionnotes.Web;
 using transactionnotes.Web.Components;
 using transactionnotes.Web.Middleware;
 using transactionnotes.Web.Services;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
+
+// Add Data Protection
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/home/app/.aspnet/DataProtection-Keys"))
+    .SetApplicationName("TransactionNotesApp");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
