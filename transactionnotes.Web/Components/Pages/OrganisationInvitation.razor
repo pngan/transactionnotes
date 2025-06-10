@@ -1,0 +1,30 @@
+@page "/organisation-invitation"
+@using Microsoft.AspNetCore.Components
+
+<PageTitle>Join or Create an Organisation</PageTitle>
+
+<div class="container d-flex flex-column align-items-center justify-content-center min-vh-100">
+    <div class="text-center p-5 bg-white bg-opacity-75 rounded-4 shadow-lg" style="max-width: 600px;">
+        <h1 class="display-4 mb-4">Welcome!</h1>
+        <p class="lead mb-4">You're not part of an organisation yet.</p>
+        <button class="btn btn-success btn-lg mb-3 w-100" @onclick="CreateOrganisation">Create a New Organisation</button>
+        <button class="btn btn-outline-primary btn-lg w-100" @onclick="JoinOrganisation">Join an Organisation</button>
+    </div>
+</div>
+
+@code {
+    private void CreateOrganisation()
+    {
+        // TODO: Navigate to organisation creation page or show modal
+        NavigationManager.NavigateTo("/organisation/create");
+    }
+
+    private void JoinOrganisation()
+    {
+        // TODO: Navigate to join organisation page or show modal
+        NavigationManager.NavigateTo("/organisation/join");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}

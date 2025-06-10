@@ -5,8 +5,8 @@ public static class MiddlewareExtensions
     public static IApplicationBuilder AddUserMiddleware(this IApplicationBuilder builder)
     {
         return builder
-            //.UseMiddleware<AuthHeaderInspectionMiddleware>()
-            .UseMiddleware<ValidateKeycloakJwtMiddleware>()
-            .UseMiddleware<AssignUserPermissionsMiddleware>();
+            .UseMiddleware<AuthHeaderInspectionMiddleware>()
+            .UseMiddleware<ValidateKeycloakJwtMiddleware>();
+          //  .UseMiddleware<AssignUserPermissionsMiddleware>();
     }
 }

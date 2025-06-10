@@ -47,6 +47,19 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
     .AddHttpMessageHandler<ApiErrorHandler>()
     .AddHttpMessageHandler<DebuggingHttpHandler>();
 
+// Add OrganisationApiClient HttpClient with BaseAddress set to apiservice
+builder.Services.AddHttpClient<OrganisationApiClient>(client =>
+{
+    client.BaseAddress = new("https+http://apiservice");
+    if (builder.Environment.IsDevelopment())
+    {
+        client.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
+    }
+})
+.AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
+.AddHttpMessageHandler<ApiErrorHandler>()
+.AddHttpMessageHandler<DebuggingHttpHandler>();
+
 builder.Services.AddHttpContextAccessor();
 // Specify in appsettings.Development.json for local development, or use environment variables in production
 // E.g. TRANSNOTES__AUTHORITY, TRANSNOTES__CLIENTID, TRANSNOTES__CLIENTSECRET
@@ -152,7 +165,7 @@ app.MapPost("/account/logout", async (HttpContext context) =>
 });
 app.MapPost("/account/login", async (HttpContext context) =>
 {
-    var redirectUri = "/";
+    var redirectUri = "/login"; // Redirect to the /login Blazor page after authentication
     var properties = new AuthenticationProperties { RedirectUri = redirectUri };
 
     if ((context?.User?.Identity == null) || !context.User.Identity.IsAuthenticated)
