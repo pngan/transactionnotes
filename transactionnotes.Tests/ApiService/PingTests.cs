@@ -1,8 +1,8 @@
-using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System.Net.Http.Headers;
 using IdentityModel;
+using IdentityModel.Client;
 using transactionnotes.Tests.Common;
 
 namespace transactionnotes.Tests.ApiService

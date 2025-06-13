@@ -35,5 +35,4 @@ builder.AddProject<Projects.transactionnotes_Web>("webfrontend")
     .WaitFor(apiService);
 
 //builder.AddProject<Projects.transactionnotes_Tests>("tests");
-builder.AddDockerComposePublisher();
 builder.Build().Run();
