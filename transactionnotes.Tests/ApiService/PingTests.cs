@@ -39,7 +39,7 @@ namespace transactionnotes.Tests.ApiService
                 // Configure these settings based on your OIDC provider
                 var oidcServerUrl = "https://auth.nganfamily.com/realms/transactionnotes";
                 var clientId = AppHost.Configuration["TransNotes:ClientId"];
-                var clientSecret = AppHost.Configuration["TransNotesClientSecret"];
+                var clientSecret = AppHost.Configuration["TransNotes:ClientSecret"];
                 var scope = "openid email profile"; // Add required scopes
 
                 // For username/password flow (resource owner password)
