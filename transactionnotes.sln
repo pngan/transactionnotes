@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{02
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{77FA553A-8779-4A2A-A110-29D1BB68253C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "centraldb-migration", "transactionnotes.Database\centraldb-migration\centraldb-migration.csproj", "{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "centraldb-migration", "CentralModule\centraldb-migration\centraldb-migration.csproj", "{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Central", "Central", "{79A1467F-4CDC-4AE5-921C-3464421A9877}"
 EndProject
