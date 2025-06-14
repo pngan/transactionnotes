@@ -15,6 +15,7 @@
     <ProjectReference Include="..\transactionnotes.ApiService\transactionnotes.ApiService.csproj" />
     <ProjectReference Include="..\transactionnotes.Web\transactionnotes.Web.csproj" />
     <ProjectReference Include="..\CentralModule\centraldb-migration\centraldb-migration.csproj" />
+    <ProjectReference Include="..\CentralModule\central.api\central.api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

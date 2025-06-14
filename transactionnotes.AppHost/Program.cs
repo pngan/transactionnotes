@@ -29,10 +29,16 @@ var apiService = builder.AddProject<Projects.transactionnotes_ApiService>("apise
     .WithReference(centralDbMigration)
     .WaitForCompletion(centralDbMigration);
 
+var centralApi = builder.AddProject<Projects.central_api>("centralapi")
+    .WithReference(centralDbMigration)
+    .WaitForCompletion(centralDbMigration);
+
 builder.AddProject<Projects.transactionnotes_Web>("webfrontend")
     .WithExternalHttpEndpoints()
     .WithReference(apiService)
-    .WaitFor(apiService);
+    .WaitFor(apiService)
+    .WithReference(centralApi)
+    .WaitFor(centralApi);
 
 //builder.AddProject<Projects.transactionnotes_Tests>("tests");
 builder.Build().Run();

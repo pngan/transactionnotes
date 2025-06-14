@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "centraldb-migration", "Cent
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Central", "Central", "{79A1467F-4CDC-4AE5-921C-3464421A9877}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "central.api", "CentralModule\central.api\central.api.csproj", "{192B7AE1-8381-7AF0-05CA-885EC675A73C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{192B7AE1-8381-7AF0-05CA-885EC675A73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192B7AE1-8381-7AF0-05CA-885EC675A73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192B7AE1-8381-7AF0-05CA-885EC675A73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192B7AE1-8381-7AF0-05CA-885EC675A73C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{285D03CE-421C-183A-7303-7CCB40F0178F} = {77FA553A-8779-4A2A-A110-29D1BB68253C}
 		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {79A1467F-4CDC-4AE5-921C-3464421A9877}
 		{C0EEDA75-8C4B-D17C-4CD5-735ADEF8A898} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{192B7AE1-8381-7AF0-05CA-885EC675A73C} = {79A1467F-4CDC-4AE5-921C-3464421A9877}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB7391FB-B016-4470-863A-B8C98147F5D9}
