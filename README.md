@@ -207,6 +207,13 @@ azd pipeline config
 ```
 This will prompt you for the missing secret values and store them with the Actions in the source repo.
 
+
+----
+If https://auth.nganfamily.com is not responding, or when attempting to login using the app, you see the following error
+![](readme-images/keycloak-error.png)
+Then restart keycloak on `docker compose`.
+
+
 ## notes
 
 Add a service to .NET Aspire
