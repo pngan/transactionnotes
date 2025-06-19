@@ -9,8 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250504.psql" />
+    <None Remove="SqlScripts\SchemaOwner\020-DDL\20250503.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250503.sql" />
+    <EmbeddedResource Include="SqlScripts\SchemaOwner\020-DDL\20250504.sql" />
   </ItemGroup>
 
   <ItemGroup>
