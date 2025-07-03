@@ -60,6 +60,19 @@ builder.Services.AddHttpClient<OrganisationApiClient>(client =>
 .AddHttpMessageHandler<ApiErrorHandler>()
 .AddHttpMessageHandler<DebuggingHttpHandler>();
 
+// Add UserApiClient HttpClient with BaseAddress set to apiservice
+builder.Services.AddHttpClient<UserApiClient>(client =>
+{
+    client.BaseAddress = new("https+http://apiservice");
+    if (builder.Environment.IsDevelopment())
+    {
+        client.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
+    }
+})
+.AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
+.AddHttpMessageHandler<ApiErrorHandler>()
+.AddHttpMessageHandler<DebuggingHttpHandler>();
+
 builder.Services.AddHttpContextAccessor();
 // Specify in appsettings.Development.json for local development, or use environment variables in production
 // E.g. TRANSNOTES__AUTHORITY, TRANSNOTES__CLIENTID, TRANSNOTES__CLIENTSECRET

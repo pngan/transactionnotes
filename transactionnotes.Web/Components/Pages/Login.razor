@@ -1,7 +1,9 @@
 ﻿@page "/login"
 
 @using Microsoft.AspNetCore.Authorization
-@inject transactionnotes.Web.Services.OrganisationApiClient OrganisationApiClient
+@using transactionnotes.Web.Services
+@inject OrganisationApiClient OrganisationApiClient
+@inject UserApiClient UserApiClient
 @inject NavigationManager Navigation
 @attribute [Authorize]
 
@@ -10,6 +12,11 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
+        // First, call the UserController's GET method via UserApiClient.
+        var user = await UserApiClient.GetUserAsync();
+        // Optionally, use the returned user info (e.g., logging, additional validation, etc.)
+
+
         // Check if user is in an organisation
         var userOrganisations = await OrganisationApiClient.GetUserOrganisationAsync();
         if (userOrganisations is null || userOrganisations.Tenants.Length == 0)
