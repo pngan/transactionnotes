@@ -11,27 +11,27 @@ Content-Type: application/x-www-form-urlencoded
 client_id={{$dotenv client_id}}&client_secret={{$dotenv client_secret}}&grant_type=password&username={{$dotenv username}}&password={{$dotenv pwd}}
 
 ### Ping endpoint (health check)
-GET http://localhost:5324/api/v1/ping
+GET https://localhost:7440/api/v1/ping
 Accept: application/json
 
 ###
 
 ### Ping with Authentication
-GET http://localhost:5324/api/v1/ping/secure
+GET https://localhost:7440/api/v1/ping/secure
 Authorization: Bearer {{getToken.response.body.$.access_token}}
 Accept: application/json
 
 ###
 
 ### Ping with Authorization and check if user is allowed
-GET http://localhost:5324/api/v1/ping/allowed
+GET https://localhost:7440/api/v1/ping/allowed
 Authorization: Bearer {{getToken.response.body.$.access_token}}
 Accept: application/json
 
 ###
 
 ### List users (replace with your actual endpoint if different)
-GET http://localhost:5324/api/v1/users
+GET https://localhost:7440/api/v1/users
 Authorization: Bearer {{getToken.response.body.$.access_token}}
 Accept: application/json
 
@@ -39,14 +39,14 @@ Accept: application/json
 
 
 ### Example: Get a single user by ID (replace {id} with a real user ID)
-GET http://localhost:5324/api/v1/users/{id}
+GET https://localhost:7440/api/v1/users/{id}
 Authorization: Bearer  {{getToken.response.body.$.access_token}}
 Accept: application/json
 
 ###
 
 ### Example: Create a new user (replace with your actual model)
-POST http://localhost:5324/api/v1/users
+POST https://localhost:7440/api/v1/users
 Authorization: Bearer {{getToken.response.body.$.access_token}}
 Content-Type: application/json
 Accept: application/json
@@ -59,7 +59,7 @@ Accept: application/json
 ###
 
 ### Example: Invalid token (to see RFC 7807 ProblemDetails)
-GET http://localhost:5324/api/v1/users
+GET https://localhost:7440/api/v1/users
 Authorization: Bearer invalid_token
 Accept: application/json
 
