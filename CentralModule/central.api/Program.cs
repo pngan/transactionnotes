@@ -1,8 +1,8 @@
-using central.api.Endpoints;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -16,6 +16,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapWeatherApi();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
