@@ -1,0 +1,29 @@
+# Http file designed to be used with Visual Studio Code with REST Client extension.
+
+# Parameters are defined in a .env file, which is loaded automatically by the REST Client extension.
+#@dotenv .env  
+
+### Get JWT token from Keycloak
+# @name getToken
+POST https://auth.nganfamily.com/realms/transactionnotes/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{$dotenv client_id}}&client_secret={{$dotenv client_secret}}&grant_type=password&username={{$dotenv username}}&password={{$dotenv pwd}}
+
+### Ping endpoint (health check)
+GET http://localhost:5324/api/v1/ping
+Accept: application/json
+
+###
+
+### Ping with Authentication
+GET http://localhost:5096/api/v1/ping/secure
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Accept: application/json
+
+###
+
+### Ping with Authorization and check if user is allowed
+GET http://localhost:5096/api/v1/ping/allowed
+Authorization: Bearer {{getToken.response.body.$.access_token}}
+Accept: application/json

@@ -1,3 +1,4 @@
+using Aspire.Hosting;
 using Microsoft.IdentityModel.Protocols.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
