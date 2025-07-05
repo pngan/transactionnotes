@@ -226,3 +226,7 @@ dotnet new worker -o centraldb-migration
 # Add the new console to the AppHost project
 dotnet add .\transactionnotes.AppHost\transactionnotes.AppHost.csproj reference .\transactionnotes.Database\centraldb-migration\centraldb-migration.csproj
 ```
+And then edit the `transactionnotes.AppHost\Program.cs` to add the new service
+```csharp
+var centralDbMigration = builder.AddProject<Projects.centraldb_migration>("centraldb-migration");
+```
