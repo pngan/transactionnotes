@@ -33,9 +33,8 @@ builder.Services.AddTransient<ApiErrorHandler>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddHttpClient<WeatherApiClient>(client =>
 {
-    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
-    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-    client.BaseAddress = new("https+http://apiservice");
+    // Use only HTTPS for API service communication - HTTP endpoints are disabled
+    client.BaseAddress = new("https://apiservice");
 
     // Remove timeout in development mode
     if (builder.Environment.IsDevelopment())
@@ -50,7 +49,8 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
 // Add OrganisationApiClient HttpClient with BaseAddress set to apiservice
 builder.Services.AddHttpClient<OrganisationApiClient>(client =>
 {
-    client.BaseAddress = new("https+http://apiservice");
+    // Use only HTTPS for API service communication - HTTP endpoints are disabled
+    client.BaseAddress = new("https://apiservice");
     if (builder.Environment.IsDevelopment())
     {
         client.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
@@ -63,7 +63,8 @@ builder.Services.AddHttpClient<OrganisationApiClient>(client =>
 // Add UserApiClient HttpClient with BaseAddress set to apiservice
 builder.Services.AddHttpClient<UserApiClient>(client =>
 {
-    client.BaseAddress = new("https+http://apiservice");
+    // Use only HTTPS for API service communication - HTTP endpoints are disabled
+    client.BaseAddress = new("https://apiservice");
     if (builder.Environment.IsDevelopment())
     {
         client.Timeout = System.Threading.Timeout.InfiniteTimeSpan;
