@@ -6,9 +6,10 @@ namespace central.api.Controllers;
 [Route("api/v1/[controller]")]
 public class PingController : ControllerBase
 {
-    [HttpGet]
+    
+    [HttpGet()]
     public string Get()
     {
-        return "Pong";
+        return "Pong Central";
     }
 }

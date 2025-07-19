@@ -11,7 +11,7 @@ Content-Type: application/x-www-form-urlencoded
 client_id={{$dotenv client_id}}&client_secret={{$dotenv client_secret}}&grant_type=password&username={{$dotenv username}}&password={{$dotenv pwd}}
 
 ### Ping endpoint (health check)
-GET http://localhost:5324/api/v1/ping
+GET http://localhost:5096/api/v1/ping
 Accept: application/json
 
 ###
