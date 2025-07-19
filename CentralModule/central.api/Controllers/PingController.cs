@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace central.api.Controllers;
@@ -10,6 +11,13 @@ public class PingController : ControllerBase
     [HttpGet()]
     public string Get()
     {
-        return "Pong Central";
+        return "Central Pong";
+    }
+
+    [HttpGet("secure")]
+    [Authorize]
+    public string SecurePing()
+    {
+        return "Central Secure Pong";
     }
 }

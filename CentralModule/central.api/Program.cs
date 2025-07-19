@@ -1,7 +1,10 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using central.api.Middleware;
+
 //using transactionnotes.ApiService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -159,6 +162,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
                 logger.LogError(context.Exception, "JWT authentication failed.");
                 return Task.CompletedTask;
+            },
+            OnMessageReceived = context =>
+            {
+
+                return Task.CompletedTask;
             }
         };
 
@@ -175,6 +183,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+// Use authentication & authorization
+app.UseAuthentication();
+app.UseAuthHeaderInspection();
 app.UseAuthorization();
 
 app.MapControllers();
