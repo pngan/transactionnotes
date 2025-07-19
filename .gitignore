@@ -491,3 +491,4 @@ manifest.json
 transactionnotes.Web/appsettings.Development.json
 transactionnotes.ApiService/appsettings.Development.json
 transactionnotes.AppHost/appsettings.Development.json
+CentralModule/central.api/appsettings.Development.json
