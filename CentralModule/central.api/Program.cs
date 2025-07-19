@@ -9,6 +9,16 @@ using central.api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure Kestrel to only listen on HTTPS
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // Remove all HTTP endpoints - only allow HTTPS
+    options.ConfigureEndpointDefaults(listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -29,7 +39,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = authority;
-        options.RequireHttpsMetadata = false; // Set to true in production
+        options.RequireHttpsMetadata = true; // Set to true since we're HTTPS-only
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = true,
@@ -181,8 +191,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
-
+// Remove UseHttpsRedirection since we're not accepting HTTP requests at all
+// app.UseHttpsRedirection(); 
 
 // Use authentication & authorization
 app.UseAuthentication();
