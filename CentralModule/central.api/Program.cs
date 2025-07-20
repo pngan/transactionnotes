@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using central.api.Middleware;
+using Microsoft.AspNetCore.Identity;
 
 //using transactionnotes.ApiService.Middleware;
 
@@ -35,6 +36,11 @@ var authority = builder.Configuration["TransNotes:Authority"];
 var clientId = builder.Configuration["TransNotes:ClientId"];
 var clientSecret = builder.Configuration["TransNotes:ClientSecret"];
 var audience = builder.Configuration["TransNotes:Audience"];
+
+// Clear default inbound claim type mappings to preserve original claim names
+Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -47,7 +53,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = true,
             ValidIssuer = authority,
             ValidateLifetime = true,
-            ValidateIssuerSigningKey = true
+            ValidateIssuerSigningKey = true,
+            // Map the 'sub' claim to ClaimTypes.NameIdentifier
+            NameClaimType = ClaimTypes.Name,
+            RoleClaimType = ClaimTypes.Role
         };
 
 
@@ -60,18 +69,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             {
                 //var subject = context.HttpContext.Items[HttpContextItems.UserJwtSub] as string;
 
-                //  var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<IdentityUser>>();
+                //var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<IdentityUser>>();
 
-                //// Get the unique identifier from the Keycloak token
-                //// Keycloak typically uses 'sub' (subject) as the unique user ID
-                //var keycloakUserId = context.Principal?.FindFirst("sub")?.Value;
-                //var keycloakUsername = context.Principal?.FindFirst("preferred_username")?.Value ?? context.Principal?.Identity?.Name; // Get a display name
-
-                //if (string.IsNullOrEmpty(keycloakUserId))
-                //{
-                //    context.Fail("Missing 'sub' claim from Keycloak token.");
-                //    return;
-                //}
+                // Get the unique identifier from the Keycloak token
+                // Keycloak typically uses 'sub' (subject) as the unique user ID
+                var keycloakUserId = context.Principal?.FindFirst("sub")?.Value;
+                var keycloakUsername = context.Principal?.FindFirst("preferred_username")?.Value ?? context.Principal?.Identity?.Name; // Get a display name
+                
+                if (string.IsNullOrEmpty(keycloakUserId))
+                {
+                    var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<Program>>();
+                    logger.LogError("JWT validation failed: Missing 'sub' claim from Keycloak token. Principal claims: {@Claims}", context.Principal?.Claims.Select(c => new { c.Type, c.Value }).ToList());
+                    context.Fail("Missing 'sub' claim from Keycloak token.");
+                }
 
 
                 /*
@@ -186,6 +196,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
