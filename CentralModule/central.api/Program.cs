@@ -183,6 +183,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
     });
 
+
+// Add service defaults & Aspire client integrations.
+builder.AddServiceDefaults();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
