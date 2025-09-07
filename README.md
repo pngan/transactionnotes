@@ -211,6 +211,8 @@ This will prompt you for the missing secret values and store them with the Actio
 ----
 If https://auth.nganfamily.com is not responding, or when attempting to login using the app, you see the following error
 ![](readme-images/keycloak-error.png)
+or this error
+![](readme-images/keycloak-error2.png)
 Then restart keycloak on `docker compose`.
 
 
